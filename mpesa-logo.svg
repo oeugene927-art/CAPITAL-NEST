@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="64" viewBox="0 0 160 64" role="img" aria-label="M-Pesa logo">
+  <defs>
+    <linearGradient id="mpesaGrad" x1="0%" x2="100%" y1="0%" y2="0%">
+      <stop offset="0%" stop-color="#1fbf75"/>
+      <stop offset="100%" stop-color="#0f8f59"/>
+    </linearGradient>
+  </defs>
+  <rect width="160" height="64" rx="12" fill="#f4fbf8"/>
+  <rect x="8" y="8" width="48" height="48" rx="14" fill="url(#mpesaGrad)"/>
+  <path d="M21 39V22.5c0-1.2 1-2.2 2.2-2.2h4.9c1.5 0 2.8 1.1 3.1 2.6l2.4 13.3 5.9-17.4c.6-1.9 2.5-3.2 4.5-3.2h1.1c2.1 0 3.9 1.3 4.6 3.2l6 17.4 2.3-13.3c.3-1.5 1.6-2.6 3.1-2.6h4.8c1.2 0 2.2 1 2.2 2.2V39c0 1.2-1 2.2-2.2 2.2h-5.2c-2.5 0-4.6-1.7-5.1-4.1L57.7 24l-6.6 19.3c-.5 1.5-1.9 2.5-3.5 2.5H42c-1.4 0-2.7-1-3.2-2.4L31.1 25l-3.7 16.2c-.5 2.3-2.6 4.1-5.1 4.1H17c-1.2 0-2.2-1-2.2-2.2z" fill="#fff"/>
+  <text x="74" y="40" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" fill="#0f172a">M-Pesa</text>
+</svg>

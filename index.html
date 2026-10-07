@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fintech Inclusive Cashbook Ledger</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="script.js"></script>
+</head>
+<body>
+
+  <div id="auth-screen" class="auth-container">
+    <div class="auth-header">
+      <img id="login-logo" src="capital nest logo.jpeg" alt="Capital Nest" class="brand-logo">
+      <h1>Capital Nest </h1>
+      <p id="auth-description">Log in to access your cashbook</p>
+    </div>
+
+    <p id="auth-message" class="auth-message" role="status" aria-live="polite"></p>
+
+    <form id="login-form">
+      <div class="form-group">
+        <label for="login-email">Email Address</label>
+        <input type="email" id="login-email" autocomplete="email" required>
+      </div>
+      <div class="form-group">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Log In</button>
+      <p class="auth-switch">New to Capital Nest? <button type="button" class="text-button" id="show-register">Create an account</button></p>
+    </form>
+
+    <form id="register-form" class="hidden">
+      <div class="form-group">
+        <label for="register-name">Full Name</label>
+        <input type="text" id="register-name" autocomplete="name" required>
+      </div>
+      <div class="form-group">
+        <label for="register-email">Email Address</label>
+        <input type="email" id="register-email" autocomplete="email" required>
+      </div>
+      <div class="form-group">
+        <label for="register-password">Password</label>
+        <input type="password" id="register-password" autocomplete="new-password" minlength="8" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Create Account</button>
+      <p class="auth-switch">Already registered? <button type="button" class="text-button" id="show-login">Log in</button></p>
+    </form>
+
+    <p class="auth-note">Sign-in and cashbook records are securely managed by Supabase. PDF statements are downloaded to your device.</p>
+  </div>
+
+  <div id="dashboard-screen" class="dashboard-container hidden">
+    <header class="app-header">
+      <div class="header-brand">
+        <img id="dashboard-logo" src="capital nest logo.jpeg" alt="Capital Nest" class="brand-logo dashboard-logo-size">
+        <div>
+          <h2 id="cashbook-title">Capital Nest Cashbook</h2>
+          <span id="cashbook-business-name" class="business-name"></span>
+          <span id="user-display-name" class="user-badge">Logged in</span>
+        </div>
+      </div>
+      <div id="live-clock-container" class="clock-display">
+        🕒 <span id="live-clock-time">00:00:00 AM</span>
+      </div>
+      <div class="header-actions">
+        <button id="btn-export" class="btn btn-dark">📄 Export Cashbook PDF</button>
+        <button id="btn-logout" class="btn btn-light">Sign Out</button>
+      </div>
+    </header>
+
+    <section class="card">
+      <h3>Your Information</h3>
+      <p class="section-description">Add your contact and business details, and tell us what you are keeping records for. Your information is saved to your Supabase account.</p>
+      <p id="profile-message" class="profile-message" role="status" aria-live="polite"></p>
+      <form id="profile-form" class="profile-grid">
+        <div class="form-group">
+          <label for="profile-name">Full Name</label>
+          <input type="text" id="profile-name" autocomplete="name" required>
+        </div>
+        <div class="form-group">
+          <label for="profile-email">Email Address</label>
+          <input type="email" id="profile-email" autocomplete="email" readonly>
+        </div>
+        <div class="form-group">
+          <label for="profile-phone">Phone Number</label>
+          <input type="tel" id="profile-phone" autocomplete="tel">
+        </div>
+        <div class="form-group">
+          <label for="profile-business">Business or Group Name</label>
+          <input type="text" id="profile-business" autocomplete="organization">
+        </div>
+        <div class="form-group">
+          <label for="profile-business-type">Business or Group Type</label>
+          <input type="text" id="profile-business-type" placeholder="e.g., Retail, farming, savings group">
+        </div>
+        <div class="form-group">
+          <label for="profile-purpose">Keeping records for</label>
+          <select id="profile-purpose">
+            <option value="Business">Business</option>
+            <option value="Personal">Personal</option>
+            <option value="Household">Household</option>
+            <option value="Savings group">Savings group</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="profile-location">Town or Location</label>
+          <input type="text" id="profile-location" autocomplete="address-level2">
+        </div>
+        <div class="form-group">
+          <label for="profile-notes">Other Information</label>
+          <input type="text" id="profile-notes" placeholder="Any additional details">
+        </div>
+        <button type="submit" class="btn btn-primary">Save Information</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h3>Log Cashbook Transaction</h3>
+      <form id="entry-form" class="entry-grid">
+        <div class="form-group">
+          <label>Particulars (Description)</label>
+          <input type="text" id="entry-desc" placeholder="e.g., Stock Acquisition" required>
+        </div>
+        <div class="form-group">
+          <label>Value Amount (KES)</label>
+          <input type="number" id="entry-amount" placeholder="0.00" min="0.01" step="0.01" required>
+        </div>
+        <div class="form-group">
+          <label>Payment Channel</label>
+          <select id="entry-channel">
+            <option value="mpesa">📱 M-Pesa</option>
+            <option value="bank">🏦 Bank Transfer</option>
+            <option value="cash">💵 Liquid Cash</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Accounting Class</label>
+          <select id="entry-type">
+            <option value="income">🟢 Debit (Cash Received)</option>
+            <option value="expense">🔴 Credit (Cash Paid)</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Commit Entry</button>
+      </form>
+    </section>
+
+    <section class="card table-card">
+      <div class="table-header">
+        <h3>Real-time Analytical Cashbook Ledger</h3>
+        <div class="summary-counters">
+          <span class="text-income">Total Debits (Dr): <strong id="total-received">KES 0</strong></span>
+          <span class="text-expense">Total Credits (Cr): <strong id="total-spent">KES 0</strong></span>
+          <span class="text-net">Net Capital: <strong id="net-balance">KES 0</strong></span>
+        </div>
+      </div>
+      <p id="ledger-message" class="ledger-message" role="status" aria-live="polite"></p>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Date/Timestamp</th>
+              <th>Particulars (Description)</th>
+              <th>Channel Mode</th>
+              <th class="text-right">Debit (Dr) / In</th>
+              <th class="text-right">Credit (Cr) / Out</th>
+              <th class="text-right">Running Balance</th>
+            </tr>
+          </thead>
+          <tbody id="ledger-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

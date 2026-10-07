@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="Cash logo">
+  <rect width="120" height="120" rx="18" fill="#ecfdf5"/>
+  <circle cx="60" cy="60" r="34" fill="#16a34a"/>
+  <path d="M54 42h12v36H54zm-6 12h24v12H48zm-8 18h40v12H40zm42-36h12v36H82z" fill="#fff"/>
+</svg>
